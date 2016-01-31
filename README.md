@@ -3,75 +3,33 @@
 CLSTM is an implementation of the LSTM recurrent neural network
 model in C++, using the Eigen library for numerical computations.
 
-# TODO
-
-  - TensorFlow bindings
-  - more recurrent network types
-  - more 2D LSTM support
-  - multicore support
-  - better GPU support
+The repository for CLSTM is very unstable and difficult to build.
+This is a fork at the latest commit as of this writing with a
+guide which you can use to actually compile clstm. Unfortunately,
+it assumes you have Ubuntu 15.04.
 
 # Getting Started
 
-There is a full set of tests in the current version of clstm; just
-run them with:
+You will need Ubuntu x64 15.04, and Eigen with support for tensors.
 
-    ./run-tests
+    cd /usr/local/include && hg clone http://bitbucket.org/eigen/eigen eigen3 && hg up tensorflow_fix
 
-This will check:
+You will also need some packages.
 
- - gradient checkers for layers and compute steps
- - training a simple model through the C++ API
- - training a simple model through the Python API
- - checking the command line training tools, including loading and saving
+    sudo apt-get install \
+    hdf5-helpers libhdf5-8 libhdf5-cpp-8 libhdf5-dev python-h5py \
+    libprotobuf-dev libprotobuf9 protobuf-compiler \
+    libzmq3-dev libzmq3 libzmqpp-dev libzmqpp3 libpng12-dev
 
 To build a standalone C library, run
 
     scons
     sudo scons install
 
-Prerequisites:
-
- - scons, Eigen
- - protocol buffer library and compiler
-
-Optional: HDF5, ZMQ, Python
-
-On Ubuntu, this means:
-
-    sudo apt-get install libeigen3-dev \
-    hdf5-helpers libhdf5-8 libhdf5-cpp-8 libhdf5-dev python-h5py \
-    libprotobuf-dev libprotobuf9 protobuf-compiler \
-    libzmq3-dev libzmq3 libzmqpp-dev libzmqpp3 libpng12-dev
-
-There are a bunch of options:
-
- - `debug=1` build with debugging options, no optimization
- - `display=1` build with display support for debugging (requires ZMQ, Python)
- - `prefix=...` install under a different prefix (untested)
- - `eigen=...` where to look for Eigen include files (should contain `Eigen/Eigen`)
- - `hdf5lib=hdf5` what HDF5 library to use; enables HDF5 command line 
-   programs (may need `hdf5_serial` in some environments)
-
 After building the executables, you can run two simple test runs as follows:
 
  - `run-cmu` will train an English-to-IPA LSTM
  - `run-uw3-500` will download a small OCR training/test set and train an OCR LSTM
-
-To build the Python extension, run
-
-    python setup.py build
-    sudo python setup.py install
-
-(this is currently broken)
-
-# Documentation / Examples
-
-You can find some documentation and examples in the form of iPython notebooks in the `misc` directory
-(these are version 3 notebooks and won't open in older versions).
-
-You can view these notebooks online here:
-http://nbviewer.ipython.org/github/tmbdev/clstm/tree/master/misc/
 
 # C++ API
 
